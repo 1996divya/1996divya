@@ -14,6 +14,7 @@ export default async function Get(
         return response.json();
     } catch (error) {
         const err : any = error;
+        console.log(err.message)
         throw new Error(err);
     }
 }
