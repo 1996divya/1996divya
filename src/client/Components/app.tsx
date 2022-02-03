@@ -1,128 +1,158 @@
 import * as React from 'react';
 import '../Less/app.less';
-import {apiRoute} from '../utils';
-import {AppProps, AppStates} from "../../server/domain/IApp";
-import {ITest} from "../../server/domain/ITest";
-import {Put, Post, Get, Delete} from "../Services";
+import { apiRoute } from '../utils';
+import { AppProps, AppStates } from "../../server/domain/IApp";
+import { ITest } from "../../server/domain/ITest";
+import { Put, Post, Get, Delete } from "../Services";
+import { Label, PrimaryButton, Stack, TextField } from '@fluentui/react';
 
 export default class App extends React.Component<AppProps, AppStates> {
     state: AppStates = {
-        username: '',
-        textOfPostTest: '',
-        textForPost: '',
-        textOfPutTest: '',
-        textForPut: '',
-        textOfDeleteTest: '',
-        textForDelete: '',
+        building_name: '',
+        level_name: '',
+        area_name: '',
+        component_name: '',
+        component_brand: '',
+        key: '',
+        value: '',
+
     };
 
-    testGet = async (): Promise<void> => {
-        try {
-            const res: { username: string } = await Get(apiRoute.getRoute('test'))
-            this.setState({username: res.username});
-        } catch (error) {
-            const err : any = error;
-            
-            this.setState({username: err.message});
-        }
-    }
 
-
-    testPost = async (): Promise<void> => {
-        const {textOfPostTest} = this.state;
-
-        if (textOfPostTest.trim()) {
-            try {
-                const res: ITest = await Post(
-                    apiRoute.getRoute('test'),
-                    {text: textOfPostTest}
-                );
-                this.setState({
-                    textForPost: res.text,
-                    response: res,
-                });
-            } catch (error) {
-                const err : any = error;
-                this.setState({textForPost: err.message});
-            }
-        }
-    }
-
-    testPut = async (): Promise<void> => {
-        const {textOfPutTest, response} = this.state;
-        if (response && textOfPutTest.trim()) {
-            try {
-                const res: ITest = await Put(
-                    apiRoute.getRoute('test'),
-                    {text: textOfPutTest, id: response?._id}
-                    );
-                this.setState({textForPut: res.text, response: res});
-            } catch (error) {
-                const err : any = error;
-                this.setState({textForPut: err.message});
-            }
-        } else {
-            this.setState({
-                textForPut: "You don't have any resource in database to change. first use post",
-            })
-        }
-    }
-
-    testDelete = async (): Promise<void> => {
-        const {response} = this.state;
-        if (response) {
-            try {
-                const res: ITest = await Delete(apiRoute.getRoute('test'), {id: response?._id});
-                this.setState({textForDelete: `${res._id} ${res.text}`, response: undefined});
-            } catch (error) {
-                const err : any = error;
-                this.setState({textForDelete: err.message});
-            }
-        } else {
-            this.setState({
-                textForDelete: "You don't have any resource in database to delete. first use post"
-            })
-        }
-    }
 
     render() {
-        const {username, textForPost, textForPut, textForDelete} = this.state;
+        //const { username, textForPost, textForPut, textForDelete } = this.state;
         const inputText = "Input text...";
         return (
-            <div>
-                <div>
-                    <div>
-                        <div>
-                            <button onClick={this.testGet}>{"Test Get"}</button>
-                        </div>
-                        <label>{"Test for Get: "}</label>
-                        <h2>{!!username && `Hello ${username}!`}</h2>
+            <div style={{}}>
+                <Stack>
+
+                </Stack>
+                <Stack horizontal>
+                    <div style={{ float: 'left', paddingLeft: 100, paddingBottom: 50, paddingTop: 10 }}>
+                        <label>BUILDING</label>
+                        <TextField
+                            style={{ border: "solid thin #333", width: 200, float: "left" }}
+                            value={this.state.building_name}
+                            onChange={(e: any, val: string | undefined) => {
+                                if (val !== undefined) {
+                                    this.setState({
+                                        building_name: val,
+                                    });
+                                }
+                            }}
+                        ></TextField>
                     </div>
-                    <div>
-                        <input onChange={e => this.setState({textOfPostTest: e.target.value})} placeholder={inputText}/>
-                        <button onClick={this.testPost}>{"Test Post"}</button>
+                </Stack>
+                <Stack horizontal >
+                    <div style={{ float: 'left', paddingLeft: 100, paddingBottom: 50 }}>
+                        <label>FLOOR</label>
+                        <TextField
+                            style={{ border: "solid thin #333", width: 200, float: 'left' }}
+                            value={this.state.level_name}
+                            onChange={(e: any, val: string | undefined) => {
+                                if (val !== undefined) {
+                                    this.setState({
+                                        level_name: val,
+                                    });
+                                }
+                            }}
+                        ></TextField>
                     </div>
-                    <div>
-                        <label>{"Test for Post: "}</label>
-                        <h3>{textForPost}</h3>
+                </Stack>
+                <Stack horizontal >
+                    <div style={{ float: 'left', paddingLeft: 100, paddingBottom: 50 }}>
+                        <label>AREA</label>
+                        <TextField
+                            style={{ border: "solid thin #333", width: 200, float: "left" }}
+                            value={this.state.area_name}
+                            onChange={(e: any, val: string | undefined) => {
+                                if (val !== undefined) {
+                                    this.setState({
+                                        area_name: val,
+                                    });
+                                }
+                            }}
+                        ></TextField>
                     </div>
-                    <div>
-                        <input onChange={e => this.setState({textOfPutTest: e.target.value})} placeholder={inputText}/>
-                        <button onClick={this.testPut}>{"Test Put"}</button>
+                </Stack>
+                <Stack horizontal >
+                    <div style={{ float: 'left', paddingLeft: 100, paddingBottom: 50 }}>
+                        <label>COMPONENT NAME</label>
+                        <TextField
+                            style={{ border: "solid thin #333", width: 200, float: "left" }}
+                            value={this.state.component_name}
+                            onChange={(e: any, val: string | undefined) => {
+                                if (val !== undefined) {
+                                    this.setState({
+                                        component_name: val,
+                                    });
+                                }
+                            }}
+                        ></TextField>
                     </div>
-                    <div>
-                        <label>{"Test for Put: "}</label>
-                        <h3>{textForPut}</h3>
+                </Stack>
+                <Stack horizontal >
+                    <div style={{ float: 'left', paddingLeft: 100, paddingBottom: 50 }}>
+                        <label>COMPONENT BRAND</label>
+                        <TextField
+                            style={{ border: "solid thin #333", width: 200, float: "left" }}
+                            value={this.state.component_brand}
+                            onChange={(e: any, val: string | undefined) => {
+                                if (val !== undefined) {
+                                    this.setState({
+                                        component_brand: val,
+                                    });
+                                }
+                            }}
+                        ></TextField>
                     </div>
-                    <div>
-                        <button onClick={this.testDelete}>{"Test Delete"}</button>
+                </Stack>
+                <Stack horizontal>
+                    <div style={{ float: 'left', paddingLeft: 10, paddingBottom: 50 }} >
+                        <h1 style={{ paddingLeft: 50 }}>KEY-VALUE</h1>
+
+                        <Stack horizontal tokens={{ childrenGap: 20 }}>
+                            <label style={{ paddingLeft: 10 }}>KEY</label>
+                            <TextField
+                                style={{ border: "solid thin #333", width: 100, }}
+                                value={this.state.key}
+                                onChange={(_e, s) => {
+                                    if (s !== undefined) {
+                                        this.setState({ key: s });
+                                    }
+                                }}
+
+
+                            ></TextField>
+
+
+                            <label>VALUE</label>
+                            <TextField
+                                style={{ border: "solid thin #333", width: 100 }}
+                                value={this.state.value}
+                                onChange={(_e, s) => {
+                                    if (s !== undefined) {
+                                        this.setState({ value: s });
+                                    }
+                                }}
+
+
+
+                            ></TextField>
+
+                        </Stack>
                     </div>
-                    <div>
-                        <label>{"Test for Delete: "}</label>
-                        <h3>{textForDelete}</h3>
-                    </div>
-                </div>
+
+                </Stack>
+                <Stack>
+                    <PrimaryButton
+                        style={{ width: 50, height: 50 }}
+                        text='SAVE' /></Stack>
             </div>
+
+
+
         );
     }
 }

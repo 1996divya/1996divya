@@ -1,4 +1,4 @@
-@green: green;
+@green: rgb(13, 0, 128);
 @link-color:        #b94eb4; // sea blue
 @link-color-hover:  lighten(@link-color, 30%);
 @button-after:  darken(@link-color, 10%);
@@ -11,15 +11,26 @@ h1 {
 body {
   text-align: center;
   margin: auto;
-}
+  //background-color: red;
+  //background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
+
+
+
+ 
+   background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
+   margin: auto;
+   animation: slide 10s infinite;
+  }
+
 button {
-  color: antiquewhite;
+  color: rgb(189, 216, 203);
   padding: @button-padding;
   background-color: @link-color;
   border-radius: @button-radius;
   margin: 5px;
   font-weight: 600;
 }
+
 
 select {
   width: 200px;
@@ -34,4 +45,22 @@ a, .link {
 }
 a:hover {
   color: @link-color-hover;
+}
+
+  
+img {
+width: 200px;
+
+}
+
+@keyframes slide {
+  25%{
+    background: url(https://wallpaperaccess.com/full/1197702.jpg);
+  }
+  50%{
+    background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
+  }
+                                         
+  
+  
 }

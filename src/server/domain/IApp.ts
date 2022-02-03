@@ -1,14 +1,15 @@
 import {ITest} from "./ITest";
 
 export interface AppStates {
-    username?: string;
-    textOfPostTest: string,
-    textForPost: string,
-    textOfPutTest: string,
-    textForPut: string,
-    textOfDeleteTest: string,
-    textForDelete: string,
+    building_name: string;
+    level_name: string,
+    area_name: string,
+    component_name: string,
+    component_brand: string,
+    key: string,
+    value: string,
     response?: ITest,
+   
 }
 
 export interface AppProps {}
