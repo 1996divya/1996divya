@@ -1,5 +1,5 @@
 @green: rgb(13, 0, 128);
-@link-color:        #b94eb4; // sea blue
+@link-color:    rgb(13, 0, 128);     // sea blue
 @link-color-hover:  lighten(@link-color, 30%);
 @button-after:  darken(@link-color, 10%);
 @button-padding: 5px;
@@ -9,18 +9,21 @@ h1 {
 }
 
 body {
-  text-align: center;
+  text-align: left;
   margin: auto;
-  //background-color: red;
+background-color: whitesmoke;
+
   //background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
 
 
 
  
-   background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
-   margin: auto;
+   //background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
+   margin: 20px;
    animation: slide 10s infinite;
+
   }
+
 
 button {
   color: rgb(189, 216, 203);
@@ -31,6 +34,16 @@ button {
   font-weight: 600;
 }
 
+.vl {
+  border-left: 6px solid green;
+  height: 200px;
+  position: absolute;
+  center: 0%;
+  margin-left: -3px;
+  top: 0;
+}
+hr.dashed {
+  border-top: 3px dashed rgb(173, 11, 11);}
 
 select {
   width: 200px;
@@ -52,15 +65,43 @@ img {
 width: 200px;
 
 }
+.box {
+  width: 350px;
+  height: 150px;
+  margin: 10px;
+  padding: 25px;
+  border: 5px solid black;
+}
 
-@keyframes slide {
-  25%{
-    background: url(https://wallpaperaccess.com/full/1197702.jpg);
-  }
-  50%{
-    background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
-  }
+table, th, td {
+  border: 1px solid black;
+}
+
+IconButton{
+  color:rgb(13, 0, 128)
+}
+
+// @keyframes slide {
+//   25%{
+//     background: url(https://wallpaperaccess.com/full/1197702.jpg);
+//   }
+//   50%{
+//     background: url(https://d11wkw82a69pyn.cloudfront.net/siteassets/images/canvas_ibs_study_low.jpg);
+//   }
                                          
   
   
-}
+// }
+
+.down { 
+  Position: absolute; 
+  top: 113%;
+  left: 18%; 
+  } 
+  .down1 { 
+    Position: absolute; 
+    
+    left: 40; 
+    } 
+ 
+  

@@ -1,0 +1,27 @@
+[
+    {
+        "building_name": "arethusa",
+        "level_name": "first",
+        "area_name": "research",
+        "component_name": "computer",
+        "component_brand": "philips",
+        "parametri": [
+            {
+                "key": "voltage",
+                "preselezioni": [
+                    "10",
+                    "20"
+                ],
+                "tipo": "testo",
+                "value": "10"
+            }
+        ],
+        "activity": [
+            {
+                "activity": "cleaning",
+                "count": 1,
+                "dropdown": "Days"
+            }
+        ]
+    }
+]
