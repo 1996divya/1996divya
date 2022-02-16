@@ -18,6 +18,7 @@ export interface AppStates {
     columns1: IColumn[],
     par_selected: Parametri,
     deleteDialogHidden: boolean,
+    deleteDialogHidden1: boolean,
     announcedMessage: string,
     activity: string,
     count: number,
@@ -26,6 +27,8 @@ export interface AppStates {
     par_activity: Activity[],
     new_activity: string[],
     par_activated: Activity,
+    nameerror: string,
+  
  
     
  

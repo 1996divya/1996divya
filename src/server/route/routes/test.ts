@@ -91,6 +91,7 @@ import {ObjectId} from 'mongodb';
             writeFileSync("mydb.json","[]",{encoding:"utf-8"});
           const usersString = readFileSync("mydb.json",{encoding:"utf-8"});
           const users: User[] = JSON.parse(usersString);
+          
          
             users.push({
             _id: this._id,
@@ -192,35 +193,30 @@ import {ObjectId} from 'mongodb';
 //         }
 //       );
 
-//       app.patch("/users", async (request, response) => {
-//         const find = request.body;
-        
-        
-       
-      
-
-        
-//         try {
-//           if(!existsSync("mydb.json"))
-//           writeFileSync("mydb.json","[]",{encoding:"utf-8"});
-//         const usersString = readFileSync("mydb.json",{encoding:"utf-8"});
-//         const users: User[] = JSON.parse(usersString);
-//         for (let i = 0; i < users.length; i++) {
-//           const element = users[i];
-//           if(element.id===find.id) {
-//             element.name= find.name;
-//             element.surname=find.surname;
-//             element.location=find.location;
-//             element.location_type=find.location_type;
-//           }
+      // app.patch("/users", async (request, response) => {
+      //   const find = request.body;
+      //    try {
+      //     if(!existsSync("mydb.json"))
+      //     writeFileSync("mydb.json","[]",{encoding:"utf-8"});
+      //   const usersString = readFileSync("mydb.json",{encoding:"utf-8"});
+      //   const users: User[] = JSON.parse(usersString);
+      //   for (let i = 0; i < users.length; i++) {
+      //     const element = users[i];
+      //     if(element.building_name===find.building_name) {
+            
+      //       element.level_name=find.level_name;
+      //       element.area_name=find.area_name;
+      //       element.component_name=find.component_name;
+      //       element.component_brand=find.component_brand
+      //     }
           
-//         }
-//         writeFileSync("mydb.json",JSON.stringify(users));
-//         response.status(200).send(users);
-//         }catch(error){
-//           response.status(500).send(error);
-//         }
-//         });
+      //   }
+      //   writeFileSync("mydb.json",JSON.stringify(users));
+      //   response.status(200).send(users);
+      //   }catch(error){
+      //     response.status(500).send(error);
+      //   }
+      //   });
 
       
       

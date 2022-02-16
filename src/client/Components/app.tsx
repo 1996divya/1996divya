@@ -12,7 +12,9 @@ import { Selection } from '@uifabric/utilities/lib/selection/Selection';
 import { initializeIcons } from '@uifabric/icons';
 import axios from 'axios';
 import { User } from '../../server/module'
-import { db } from '../../server/db'
+import { _CONFIG_ } from '../../server/config';
+
+//import { db } from '../../server/db'
 
 initializeIcons()
 const wrapStackTokens: IStackTokens = { childrenGap: 10, padding: -10 };
@@ -32,10 +34,48 @@ const options1: IDropdownOption[] = [
 
 
 ]
-
+// const handleChange = (event: { target: { type: string; name: any; checked: any; value: any; }; }) => {
+//     const isCheckbox = event.target.type === "checkbox";
+//     setState({
+//       [event.target.name]: isCheckbox
+//         ? event.target.checked
+//         : event.target.value
+//     });
+//   };
 export default class App extends React.Component<AppProps, AppStates> {
 
+    // validate = () => {
 
+
+    //     // let passwordError = "";
+
+    //     if (!this.state.building_name || !this.state.level_name || !this.state.area_name || !this.state.component_name || !this.state.component_brand  ) {
+    //       alert( "Please fill all blank");
+    //     }
+
+
+
+
+    //     return true;
+    //   };
+
+    //   handleSubmit1 = (event: { preventDefault: () => void; }) => {
+    //       console.log('done')
+    //     event.preventDefault();
+    //     const isValid = this.validate();
+    //     if (isValid) {
+    //       console.log(this.state);
+    //       // clear form
+    //       this.setState({
+    //           building_name:this.state.building_name,
+    //           level_name:this.state.level_name,
+    //           area_name:this.state.area_name,
+    //           component_name:this.state.component_name,
+    //           component_brand: this.state.component_brand,
+    //           nameerror:''
+    //       });
+    //     }
+    //   };
     displayNameHandler = (e: any) => {
         const updatedName = e.target.value;
 
@@ -82,6 +122,7 @@ export default class App extends React.Component<AppProps, AppStates> {
             columns1: this._columns1,
             par_selected: new Parametri(),
             deleteDialogHidden: true,
+            deleteDialogHidden1:true,
             announcedMessage: '',
             activity: '',
             count: 0,
@@ -90,6 +131,7 @@ export default class App extends React.Component<AppProps, AppStates> {
             par_activity: [],
             new_activity: [],
             par_activated: new Activity(),
+            nameerror: '',
 
         }
     }
@@ -228,7 +270,33 @@ export default class App extends React.Component<AppProps, AppStates> {
                 </Text>
             );
         },
-    }]
+    }
+    ,
+    {
+        key: 'column4',
+        name: 'Cancella',
+        minWidth: 80,
+        maxWidth: 100,
+        isRowHeader: true,
+        isResizable: true,
+        isSorted: false,
+        isSortedDescending: false,
+        onRender: () => {
+            return (
+                <IconButton
+
+                    iconProps={{ iconName: 'ChromeClose' }}
+                    title='Cancella'
+                    ariaLabel="Delete"
+                    onClick={() => {
+                        this.setState({ deleteDialogHidden1: false });
+                    }}
+                />
+            );
+        },
+        data: 'string',
+        isPadded: true,
+    },]
     private _columns: IColumn[] = [
         {
 
@@ -398,14 +466,14 @@ export default class App extends React.Component<AppProps, AppStates> {
             });
         }
     };
-    private _addNewParametro1 = () => {
+    private _addNewActivity = () => {
 
         if (!(this.state.activity === '' || this.state.activity === null || this.state.activity === undefined)) {
             const temp: Activity[] = this.state.par_activity.select((x) => x);
             for (const elem of temp) {
                 if (elem.activity === this.state.activity) {
                     toastError(
-                        'Già esiste un parametro con lo stesso nome'
+                        'Già esiste un attività con lo stesso nome'
                     );
                     return;
                 }
@@ -440,6 +508,17 @@ export default class App extends React.Component<AppProps, AppStates> {
         });
     };
 
+    private _removeActivity = () => {
+        const temp = this.state.par_activity.where(
+            (x) => x.activity === this.state.par_activated.activity
+        );
+        this._par_activity = temp;
+        this.setState({
+            par_activity: temp,
+            deleteDialogHidden1: true,
+            par_activated: new Activity(),
+        });
+    };
 
 
 
@@ -466,6 +545,29 @@ export default class App extends React.Component<AppProps, AppStates> {
                         <DefaultButton
                             onClick={() => {
                                 this.setState({ deleteDialogHidden: true });
+                            }}
+                            text="No"
+                        />
+                    </DialogFooter>
+                </Dialog>
+                <Dialog
+                    hidden={this.state.deleteDialogHidden1}
+                    onDismiss={() => {
+                        this.setState({ deleteDialogHidden1: true });
+                    }}
+                    dialogContentProps={{
+                        title: 'Confermi la cancellazione?',
+                        subText:
+                            'Ricorda che per confermare definitavamente la cancellazione dovrai salvare la scheda'
+                        ,
+                        showCloseButton: false,
+                    }}
+                >
+                    <DialogFooter>
+                        <PrimaryButton onClick={this._removeActivity} text="Sì" />
+                        <DefaultButton
+                            onClick={() => {
+                                this.setState({ deleteDialogHidden1: true });
                             }}
                             text="No"
                         />
@@ -546,7 +648,7 @@ export default class App extends React.Component<AppProps, AppStates> {
 
                                 text='Aggiungi'
                                 style={{ alignContent: 'center', width: 50, height: 60 }}
-                                onClick={this._addNewParametro1}
+                                onClick={this._addNewActivity}
 
                             ></PrimaryButton>
 
@@ -591,6 +693,7 @@ export default class App extends React.Component<AppProps, AppStates> {
                                     this.setState({
                                         building_name: val,
                                     });
+
                                 }
                             }}
                         ></TextField>
@@ -793,26 +896,7 @@ export default class App extends React.Component<AppProps, AppStates> {
                                 checkButtonAriaLabel="Row checkbox"
                             />
 
-
-
-
-
-
                         </Stack>
-
-
-                    </div>
-
-                    <div className='down1' style={{ paddingLeft: 150, }}>
-
-
-
-
-
-
-
-
-
                     </div>
 
 
@@ -825,28 +909,52 @@ export default class App extends React.Component<AppProps, AppStates> {
 
 
                 <Stack>
+
                     <PrimaryButton
                         style={{ width: 50, height: 50 }}
                         text='SAVE'
+
                         onClick={
 
                             async (event: any) => {
-                                const json = {
 
-                                    building_name: this.state.building_name,
-                                    level_name: this.state.level_name,
-                                    area_name: this.state.area_name,
-                                    component_name: this.state.component_name,
-                                    component_brand: this.state.component_brand,
-                                    parametri: this.state.par_specifici,
-                                    activity: this.state.par_activity
 
+                            
+                                if (this.state.building_name && this.state.level_name && this.state.area_name && this.state.component_name && this.state.component_brand) {
+
+
+                                    const json = {
+
+                                        building_name: this.state.building_name,
+                                        level_name: this.state.level_name,
+                                        area_name: this.state.area_name,
+                                        component_name: this.state.component_name,
+                                        component_brand: this.state.component_brand,
+                                        parametri: this.state.par_specifici,
+                                        activity: this.state.par_activity
+
+                                    }
+
+                                    console.log('hi')
+                                    const result = await axios.post('http://localhost:4000/users', json);
+                                    const data = result.data
+                                    console.log(data)
+                                    if (result) {
+                                        console.log('hi')
+
+                                        toastSuccess(
+                                            'è stato salvato con successo'
+                                        );
+                                    }
+                                    else {
+                                        toastError('Non è salvato')
+                                    }
                                 }
-                                const result = await axios.post('http://localhost:3000/add_user', json);
-                                const data = result.data
-                                console.log(data)
-                                reload()
+                                else {
+                                    toastError("Assicurati di aver riempito tutte le caselle di testo");
+                                }
                             }
+
                         } /></Stack>
 
 
@@ -872,9 +980,18 @@ export function copyAndSort<T>(
         );
 }
 function toastError(message: string) {
+
     Toastify({
         text: message,
+        ..._CONFIG_.ToastWarning,
+    }).showToast();
+}
 
+function toastSuccess(message: string) {
+
+    Toastify({
+        text: message,
+        ..._CONFIG_.ToastSuccess,
     }).showToast();
 }
 
@@ -890,6 +1007,8 @@ function myFunction() {
         }
     }
 }
+
+
 
 
 

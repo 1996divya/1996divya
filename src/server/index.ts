@@ -38,18 +38,22 @@
 // // =============================================================================
 // app.listen(port);
 // console.log(`App listening on ${port}`);
-import express, { Router } from "express";
+import express, { RequestHandler, Router } from "express";
 import  Routes  from "./route/routes/test";
+import cors from "cors";
 //import mongoose from "mongoose";
 
 
 
 
 export const app = express();
-
+app.use(cors({origin:true, credentials:true}))
 app.use(express.json());
 
-
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  next();
+});
 
 const routes=new Routes(app);
 routes.map();
@@ -57,7 +61,7 @@ routes.map();
 
 app.use(Router);
 
-app.listen(3000, () => {
-  console.log("Server is running at port 3000");
+app.listen(4000, () => {
+  console.log("Server is running at port 4000");
 });
 
