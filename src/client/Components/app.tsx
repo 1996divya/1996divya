@@ -122,15 +122,15 @@ export default class App extends React.Component<AppProps, AppStates> {
             columns1: this._columns1,
             par_selected: new Parametri(),
             deleteDialogHidden: true,
-            deleteDialogHidden1:true,
+            deleteDialogHidden1: true,
             announcedMessage: '',
             activity: '',
             count: 0,
             showName: false,
             dropdown: options1.toString(),
-            par_activity: [],
+            activity_specifici: [],
             new_activity: [],
-            par_activated: new Activity(),
+            activity_selected: new Activity(),
             nameerror: '',
 
         }
@@ -194,11 +194,11 @@ export default class App extends React.Component<AppProps, AppStates> {
             const activity = this._selection.getSelection()[0] as Activity;
             if (activity !== undefined) {
                 this.setState({
-                    par_activated: activity,
+                    activity_selected: activity,
                 });
             } else {
                 this.setState({
-                    par_activated: new Activity(),
+                    activity_selected: new Activity(),
                 });
             }
         },
@@ -271,7 +271,7 @@ export default class App extends React.Component<AppProps, AppStates> {
             );
         },
     }
-    ,
+        ,
     {
         key: 'column4',
         name: 'Cancella',
@@ -469,7 +469,7 @@ export default class App extends React.Component<AppProps, AppStates> {
     private _addNewActivity = () => {
 
         if (!(this.state.activity === '' || this.state.activity === null || this.state.activity === undefined)) {
-            const temp: Activity[] = this.state.par_activity.select((x) => x);
+            const temp: Activity[] = this.state.activity_specifici.select((x) => x);
             for (const elem of temp) {
                 if (elem.activity === this.state.activity) {
                     toastError(
@@ -487,7 +487,7 @@ export default class App extends React.Component<AppProps, AppStates> {
             });
             this._par_activity = temp;
             this.setState({
-                par_activity: temp,
+                activity_specifici: temp,
                 activity: '',
                 count: 0,
                 dropdown: '',
@@ -509,14 +509,14 @@ export default class App extends React.Component<AppProps, AppStates> {
     };
 
     private _removeActivity = () => {
-        const temp = this.state.par_activity.where(
-            (x) => x.activity === this.state.par_activated.activity
+        const temp = this.state.activity_specifici.where(
+            (x) => x.activity === this.state.activity_selected.activity
         );
         this._par_activity = temp;
         this.setState({
-            par_activity: temp,
+            activity_specifici: temp,
             deleteDialogHidden1: true,
-            par_activated: new Activity(),
+            activity_selected: new Activity(),
         });
     };
 
@@ -663,7 +663,7 @@ export default class App extends React.Component<AppProps, AppStates> {
                                         width: 600
                                     }
                                 }}
-                                items={this.state.par_activity}
+                                items={this.state.activity_specifici}
                                 columns={this._columns1}
                                 selectionMode={SelectionMode.single}
                                 getKey={this._getKey}
@@ -919,7 +919,7 @@ export default class App extends React.Component<AppProps, AppStates> {
                             async (event: any) => {
 
 
-                            
+
                                 if (this.state.building_name && this.state.level_name && this.state.area_name && this.state.component_name && this.state.component_brand) {
 
 
@@ -931,12 +931,12 @@ export default class App extends React.Component<AppProps, AppStates> {
                                         component_name: this.state.component_name,
                                         component_brand: this.state.component_brand,
                                         parametri: this.state.par_specifici,
-                                        activity: this.state.par_activity
+                                        activity: this.state.activity_specifici
 
                                     }
 
                                     console.log('hi')
-                                    const result = await axios.post('http://localhost:4000/users', json);
+                                    const result = await axios.post('http://localhost:4000/add_user', json);
                                     const data = result.data
                                     console.log(data)
                                     if (result) {

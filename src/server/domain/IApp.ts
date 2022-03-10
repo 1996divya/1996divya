@@ -24,9 +24,9 @@ export interface AppStates {
     count: number,
     showName: boolean,
     dropdown: string,
-    par_activity: Activity[],
+    activity_specifici: Activity[],
     new_activity: string[],
-    par_activated: Activity,
+    activity_selected: Activity,
     nameerror: string,
   
  
